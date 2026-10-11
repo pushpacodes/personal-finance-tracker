@@ -13,6 +13,7 @@ pipeline {
         stage('Verify Project Structure') {
             steps {
                 bat 'dir'
+                bat 'set "PATH=%PATH%;C:\\Users\\kalva\\AppData\\Local\\Programs\\Docker\\DockerDesktop\\resources\\bin"'
                 bat 'docker --version'
                 bat 'docker compose version'
             }
