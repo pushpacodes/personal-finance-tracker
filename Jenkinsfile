@@ -1,5 +1,10 @@
+
 pipeline {
     agent any
+
+    environment {
+        PATH+DOCKER = 'C:\\Users\\kalva\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin'
+    }
 
     stages {
 
@@ -12,8 +17,8 @@ pipeline {
 
         stage('Verify Project Structure') {
             steps {
+                echo 'Verifying project files and Docker installation...'
                 bat 'dir'
-                bat 'set "PATH=%PATH%;C:\\Users\\kalva\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin"'
                 bat 'docker --version'
                 bat 'docker compose version'
             }
@@ -22,7 +27,6 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 echo 'Building backend and frontend Docker images...'
-
                 bat 'docker compose build'
             }
         }
@@ -30,7 +34,6 @@ pipeline {
         stage('Stop Existing Containers') {
             steps {
                 echo 'Stopping existing containers...'
-
                 bat 'docker compose down'
             }
         }
@@ -38,7 +41,6 @@ pipeline {
         stage('Deploy Application') {
             steps {
                 echo 'Starting Personal Finance Tracker using Docker Compose...'
-
                 bat 'docker compose up -d'
             }
         }
@@ -46,7 +48,6 @@ pipeline {
         stage('Verify Containers') {
             steps {
                 echo 'Checking running containers...'
-
                 bat 'docker compose ps'
             }
         }
@@ -54,7 +55,6 @@ pipeline {
         stage('Test Backend') {
             steps {
                 echo 'Testing backend API...'
-
                 bat 'curl.exe -f http://localhost:5000'
             }
         }
@@ -62,7 +62,6 @@ pipeline {
         stage('Test Frontend') {
             steps {
                 echo 'Testing frontend application...'
-
                 bat 'curl.exe -f http://localhost:8081'
             }
         }
