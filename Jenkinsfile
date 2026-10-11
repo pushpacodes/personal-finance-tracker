@@ -2,10 +2,6 @@
 pipeline {
     agent any
 
-    environment {
-        PATH+DOCKER = 'C:\\Users\\kalva\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin'
-    }
-
     stages {
 
         stage('Checkout') {
@@ -17,38 +13,49 @@ pipeline {
 
         stage('Verify Project Structure') {
             steps {
-                echo 'Verifying project files and Docker installation...'
-                bat 'dir'
-                bat 'docker --version'
-                bat 'docker compose version'
+                withEnv(['PATH+DOCKER=C:\\Users\\kalva\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin']) {
+                    echo 'Verifying project files and Docker installation...'
+                    bat 'dir'
+                    bat 'where.exe docker'
+                    bat 'docker --version'
+                    bat 'docker compose version'
+                }
             }
         }
 
         stage('Build Docker Images') {
             steps {
-                echo 'Building backend and frontend Docker images...'
-                bat 'docker compose build'
+                withEnv(['PATH+DOCKER=C:\\Users\\kalva\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin']) {
+                    echo 'Building backend and frontend Docker images...'
+                    bat 'docker compose build'
+                }
             }
         }
 
         stage('Stop Existing Containers') {
             steps {
-                echo 'Stopping existing containers...'
-                bat 'docker compose down'
+                withEnv(['PATH+DOCKER=C:\\Users\\kalva\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin']) {
+                    echo 'Stopping existing containers...'
+                    bat 'docker compose down'
+                }
             }
         }
 
         stage('Deploy Application') {
             steps {
-                echo 'Starting Personal Finance Tracker using Docker Compose...'
-                bat 'docker compose up -d'
+                withEnv(['PATH+DOCKER=C:\\Users\\kalva\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin']) {
+                    echo 'Starting Personal Finance Tracker using Docker Compose...'
+                    bat 'docker compose up -d'
+                }
             }
         }
 
         stage('Verify Containers') {
             steps {
-                echo 'Checking running containers...'
-                bat 'docker compose ps'
+                withEnv(['PATH+DOCKER=C:\\Users\\kalva\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin']) {
+                    echo 'Checking running containers...'
+                    bat 'docker compose ps'
+                }
             }
         }
 
