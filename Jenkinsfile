@@ -6,37 +6,86 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Checking out Personal Finance Tracker...'
+                checkout scm
             }
         }
 
-        stage('Install Backend Dependencies') {
+        stage('Verify Project Structure') {
             steps {
-                dir('backend') {
-                    bat 'npm install'
-                }
+                bat 'dir'
+                bat 'docker --version'
+                bat 'docker compose version'
             }
         }
 
-        stage('Install Frontend Dependencies') {
+        stage('Build Docker Images') {
             steps {
-                dir('frontend') {
-                    bat 'npm install'
-                }
+                echo 'Building backend and frontend Docker images...'
+
+                bat 'docker compose build'
             }
         }
 
-        stage('Build Frontend') {
+        stage('Stop Existing Containers') {
             steps {
-                dir('frontend') {
-                    bat 'npm run build'
-                }
+                echo 'Stopping existing containers...'
+
+                bat 'docker compose down'
+            }
+        }
+
+        stage('Deploy Application') {
+            steps {
+                echo 'Starting Personal Finance Tracker using Docker Compose...'
+
+                bat 'docker compose up -d'
+            }
+        }
+
+        stage('Verify Containers') {
+            steps {
+                echo 'Checking running containers...'
+
+                bat 'docker compose ps'
+            }
+        }
+
+        stage('Test Backend') {
+            steps {
+                echo 'Testing backend API...'
+
+                bat 'curl.exe -f http://localhost:5000'
+            }
+        }
+
+        stage('Test Frontend') {
+            steps {
+                echo 'Testing frontend application...'
+
+                bat 'curl.exe -f http://localhost:8081'
             }
         }
 
         stage('CI/CD Success') {
             steps {
-                echo 'Personal Finance Tracker CI/CD completed successfully!'
+                echo '=============================================='
+                echo 'Personal Finance Tracker CI/CD completed!'
+                echo 'Docker images built successfully.'
+                echo 'Containers deployed successfully.'
+                echo 'Backend:  http://localhost:5000'
+                echo 'Frontend: http://localhost:8081'
+                echo '=============================================='
             }
+        }
+    }
+
+    post {
+        failure {
+            echo 'CI/CD pipeline failed. Check the stage logs above.'
+        }
+
+        success {
+            echo 'SUCCESS: Personal Finance Tracker is running!'
         }
     }
 }

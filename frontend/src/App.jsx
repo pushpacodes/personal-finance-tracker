@@ -102,7 +102,7 @@ function App() {
   const fetchTransactions = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/transactions"
+        "/api/transactions"
       );
 
       if (!response.ok) {
@@ -134,7 +134,7 @@ function App() {
   const fetchBudgets = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/budgets"
+        "/api/budgets"
       );
 
       if (!response.ok) {
@@ -266,7 +266,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/transactions",
+        "/api/transactions",
         {
           method: "POST",
           headers: {
@@ -327,7 +327,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/transactions/${id}`,
+        `/api/transactions/${id}`,
         {
           method: "DELETE",
         }
@@ -574,7 +574,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/budgets",
+        "/api/budgets",
         {
           method: "POST",
           headers: {
@@ -651,7 +651,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/budgets/${id}`,
+        `/api/budgets/${id}`,
         {
           method: "DELETE",
         }

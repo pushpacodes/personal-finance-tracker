@@ -1,0 +1,24 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: finance-backend
+    ports:
+      - "5000:5000"
+    networks:
+      - finance-network
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: finance-frontend
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend
+    networks:
+      - finance-network
+
+networks:
+  finance-network:
+    driver: bridge
