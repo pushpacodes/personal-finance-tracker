@@ -14,7 +14,7 @@ pipeline {
             steps {
                 bat 'dir'
                 bat 'set "PATH=%PATH%;C:\\Users\\kalva\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin"'
-                git add Jenkinsfilebat 'docker --version'
+                bat 'docker --version'
                 bat 'docker compose version'
             }
         }
