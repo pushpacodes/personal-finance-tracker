@@ -13,8 +13,8 @@ pipeline {
         stage('Verify Project Structure') {
             steps {
                 bat 'dir'
-                bat 'set "PATH=%PATH%;C:\\Users\\kalva\\AppData\\Local\\Programs\\Docker\\DockerDesktop\\resources\\bin"'
-                bat 'docker --version'
+                bat 'set "PATH=%PATH%;C:\\Users\\kalva\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin"'
+                git add Jenkinsfilebat 'docker --version'
                 bat 'docker compose version'
             }
         }
