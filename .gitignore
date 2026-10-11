@@ -1,9 +1,16 @@
+
 node_modules/
 .env
 .env.*
+
+# Ignore database files by default
 *.db
 *.sqlite
 *.sqlite3
+
+# Include the backend database required for the Docker build
+!backend/finance.db
+
 *.log
 dist/
 build/
